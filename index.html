@@ -107,6 +107,7 @@
 
 <button id="openGift">🎁 Open Your Gift!</button>
 
+<!-- Optional music, safe if missing -->
 <audio id="birthdayMusic" src="audio/happy_birthday.mp3" preload="auto"></audio>
 
 <canvas id="confettiCanvas"></canvas>
@@ -198,14 +199,18 @@
   }
   drawFireworks();
 
-  // Show message, music, and fireworks on button click
+  // Button click handler
   const button = document.getElementById("openGift");
   const message = document.getElementById("loveMessage");
   const music = document.getElementById("birthdayMusic");
 
   button.addEventListener("click", () => {
     message.style.opacity = 1;
-    music.play();
+
+    // Try to play music safely
+    if (music) {
+      music.play().catch(err => console.log("Music blocked:", err));
+    }
 
     // Burst extra confetti
     for(let i=0; i<50; i++){
