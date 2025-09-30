@@ -181,31 +181,7 @@
       requestAnimationFrame(drawFireworks);
     }
     drawFireworks();
-
-    // Hearts on Click ❤️
-    document.addEventListener("click", (e) => {
-      const heart = document.createElement("div");
-      heart.textContent = "❤️";
-      heart.style.position = "absolute";
-      heart.style.left = e.pageX + "px";
-      heart.style.top = e.pageY + "px";
-      heart.style.fontSize = "20px";
-      heart.style.pointerEvents = "none";
-      document.body.appendChild(heart);
-
-      let i = 0;
-      const interval = setInterval(() => {
-        if (i > 40) {
-          clearInterval(interval);
-          heart.remove();
-        } else {
-          heart.style.top = (parseInt(heart.style.top) - 2) + "px";
-          heart.style.opacity = (40 - i) / 40;
-          i++;
-        }
-      }, 20);
-    });
-
+  
     // Gift Button 🎁
     const button = document.getElementById("openGift");
     const message = document.getElementById("giftMessage");
