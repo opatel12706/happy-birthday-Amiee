@@ -1,115 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday Amiee 💖</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Arial", sans-serif;
-      background: linear-gradient(135deg, #ffafbd, #ffc3a0);
-      color: #fff;
-      text-align: center;
-      overflow-x: hidden;
-    }
-    h1 {
-      font-size: 3em;
-      margin-top: 50px;
-      animation: fadeIn 3s ease-in-out;
-    }
-    .message {
-      font-size: 1.5em;
-      margin: 30px auto;
-      width: 80%;
-      line-height: 1.6;
-      animation: fadeIn 4s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .slideshow {
-      margin: 30px auto;
-      max-width: 500px;
-      position: relative;
-    }
-    .slideshow img {
-      width: 100%;
-      border-radius: 15px;
-      display: none;
-    }
-    .slideshow img.active {
-      display: block;
-    }
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Amiee 💖</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Arial", sans-serif;
+    background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+    color: #fff;
+    text-align: center;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+
+  h1 {
+    font-size: 3em;
+    margin-top: 50px;
+    animation: fadeIn 3s ease-in-out, glow 2s infinite alternate;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes glow {
+    from { text-shadow: 0 0 10px #fff, 0 0 20px #ff69b4; }
+    to { text-shadow: 0 0 20px #fff, 0 0 40px #ff69b4; }
+  }
+
+  .message {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 0 15px;
+    font-size: 1.5em;
+    line-height: 1.6;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+  }
+
+  .slideshow {
+    margin: 30px auto;
+    max-width: 500px;
+    position: relative;
+    height: 300px;
+  }
+  .slideshow img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1.5s ease, transform 1.5s ease;
+  }
+  .slideshow img.active {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 30px;
+    background-color: #ff69b4;
+    color: #fff;
+    transition: transform 0.2s ease;
+  }
+  button:hover {
+    transform: scale(1.1);
+  }
+
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+</style>
 </head>
 <body>
-  <h1>Happy Birthday, Amiee! 🎂💖</h1>
-  <p class="message">
-    Happy 20th Birthday to my future wife. You are the most beautiful part of my life,
-    the person who makes everything brigher just by being yourself. I'm so grateful to get to 
-    love you and call you mine, and even more grateful that I get to dream about a lifetime
-    with you. You deserve all the happiness, laughter, and love this world can give, and 
-    I'll keep doing everything I can to make sure you always feel that with me. Here's to your
-    20s being unforgettable, and to us writing the story of forever together.
-  </p>
 
-  <div class="slideshow">
-    <img src="images/pic1.JPG" class="active">
-    <img src="images/pic2.JPG">
-    <img src="images/pic3.JPG">
-    <img src="images/pic4.JPG">
-    <img src="images/pic5.JPG">
-    <img src="images/pic6.JPG">
-    <img src="images/pic7.JPG">
-  </div>
+<h1>Happy Birthday, Amiee! 🎂💖</h1>
 
-  <script>
-    // Confetti 🎉
-    const canvas = document.createElement("canvas");
-    document.body.appendChild(canvas);
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    const ctx = canvas.getContext("2d");
-    const confetti = Array.from({ length: 200 }).map(() => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      r: Math.random() * 6 + 4,
-      dx: Math.random() - 0.5,
-      dy: Math.random() * 3 + 2,
-      color: `hsl(${Math.random() * 360}, 100%, 50%)`
-    }));
+<p class="message" id="loveMessage">
+  Happy 20th Birthday to my future wife. You are the most beautiful part of my life,
+  the person who makes everything brighter just by being yourself. I'm so grateful to get to 
+  love you and call you mine, and even more grateful that I get to dream about a lifetime
+  with you. You deserve all the happiness, laughter, and love this world can give.
+</p>
 
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      confetti.forEach(c => {
-        ctx.beginPath();
-        ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-        ctx.fillStyle = c.color;
-        ctx.fill();
-        c.x += c.dx;
-        c.y += c.dy;
-        if (c.y > canvas.height) c.y = -10;
+<div class="slideshow">
+  <img src="images/pic1.JPG" class="active">
+  <img src="images/pic2.JPG">
+  <img src="images/pic3.JPG">
+  <img src="images/pic4.JPG">
+  <img src="images/pic5.JPG">
+  <img src="images/pic6.JPG">
+  <img src="images/pic7.JPG">
+</div>
+
+<button id="openGift">🎁 Open Your Gift!</button>
+
+<audio id="birthdayMusic" src="audio/happy_birthday.mp3" preload="auto"></audio>
+
+<canvas id="confettiCanvas"></canvas>
+<canvas id="fireworksCanvas"></canvas>
+
+<script>
+  // Slideshow with fade & zoom
+  let current = 0;
+  const images = document.querySelectorAll(".slideshow img");
+  setInterval(() => {
+    images[current].classList.remove("active");
+    current = (current + 1) % images.length;
+    images[current].classList.add("active");
+  }, 3000);
+
+  // Confetti setup
+  const canvas = document.getElementById("confettiCanvas");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const ctx = canvas.getContext("2d");
+  const confetti = Array.from({length: 200}).map(() => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 6 + 4,
+    dx: Math.random() - 0.5,
+    dy: Math.random() * 3 + 2,
+    color: `hsl(${Math.random() * 360}, 100%, 50%)`
+  }));
+
+  function drawConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    confetti.forEach(c => {
+      ctx.beginPath();
+      ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+      ctx.fillStyle = c.color;
+      ctx.fill();
+      c.x += c.dx + Math.sin(c.y / 20) * 1;
+      c.y += c.dy;
+      if(c.y > canvas.height) c.y = -10;
+      if(c.x > canvas.width) c.x = 0;
+      if(c.x < 0) c.x = canvas.width;
+    });
+    requestAnimationFrame(drawConfetti);
+  }
+  drawConfetti();
+
+  // Fireworks setup
+  const fireworksCanvas = document.getElementById("fireworksCanvas");
+  fireworksCanvas.width = window.innerWidth;
+  fireworksCanvas.height = window.innerHeight;
+  const fctx = fireworksCanvas.getContext("2d");
+  let fireworks = [];
+
+  function createFirework(x, y) {
+    const colors = ["#ff4081", "#ffd740", "#69f0ae", "#40c4ff", "#ffab40"];
+    const particles = [];
+    for (let i = 0; i < 50; i++) {
+      const angle = Math.random() * 2 * Math.PI;
+      const speed = Math.random() * 5 + 2;
+      particles.push({
+        x,
+        y,
+        dx: Math.cos(angle) * speed,
+        dy: Math.sin(angle) * speed,
+        life: 100,
+        color: colors[Math.floor(Math.random() * colors.length)]
       });
-      requestAnimationFrame(draw);
     }
-    draw();
+    fireworks.push(particles);
+  }
 
-    // Slideshow 📸
-    let current = 0;
-    const images = document.querySelectorAll(".slideshow img");
-    setInterval(() => {
-      images[current].classList.remove("active");
-      current = (current + 1) % images.length;
-      images[current].classList.add("active");
-    }, 3000);
-  </script>
+  function drawFireworks() {
+    fctx.clearRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
+    fireworks.forEach((particles, i) => {
+      particles.forEach(p => {
+        fctx.beginPath();
+        fctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+        fctx.fillStyle = p.color;
+        fctx.fill();
+        p.x += p.dx;
+        p.y += p.dy;
+        p.dy += 0.05; // gravity
+        p.life--;
+      });
+      fireworks[i] = particles.filter(p => p.life > 0);
+    });
+    fireworks = fireworks.filter(f => f.length > 0);
+    requestAnimationFrame(drawFireworks);
+  }
+  drawFireworks();
+
+  // Show message, music, and fireworks on button click
+  const button = document.getElementById("openGift");
+  const message = document.getElementById("loveMessage");
+  const music = document.getElementById("birthdayMusic");
+
+  button.addEventListener("click", () => {
+    message.style.opacity = 1;
+    music.play();
+
+    // Burst extra confetti
+    for(let i=0; i<50; i++){
+      confetti.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height / 2,
+        r: Math.random() * 8 + 4,
+        dx: (Math.random()-0.5)*5,
+        dy: Math.random()*5 + 2,
+        color: `hsl(${Math.random()*360},100%,50%)`
+      });
+    }
+
+    // Firework bursts
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => {
+        createFirework(
+          Math.random() * fireworksCanvas.width,
+          Math.random() * fireworksCanvas.height / 2
+        );
+      }, i * 600);
+    }
+  });
+
+  // Floating hearts on click (except button)
+  document.body.addEventListener("click", e => {
+    if(e.target !== button){
+      const heart = document.createElement("div");
+      heart.textContent = "💖";
+      heart.style.position = "absolute";
+      heart.style.left = e.pageX + "px";
+      heart.style.top = e.pageY + "px";
+      heart.style.fontSize = "24px";
+      heart.style.pointerEvents = "none";
+      heart.style.opacity = 1;
+      document.body.appendChild(heart);
+
+      const anim = setInterval(() => {
+        heart.style.top = parseInt(heart.style.top) - 1 + "px";
+        heart.style.opacity -= 0.02;
+        if (heart.style.opacity <= 0){
+          clearInterval(anim);
+          heart.remove();
+        }
+      }, 16);
+    }
+  });
+</script>
+
 </body>
 </html>
